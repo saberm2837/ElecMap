@@ -68,8 +68,12 @@ This package leverages powerful libraries such as SimpleITK for image processing
 ```python
 import ElecMap.electrode_detection as ed
 
+# Input files
+ct_file = 'sample_ct.nii'
+mr_file = 'sample_mr.nii'
+
 # Detect electrodes using CT and MR images
-ed.detect_electrodes('CT_016.nii', 'MR_016.nii')
+ed.detect_electrodes(ct_file, mr_file)
 ```
 
 - This step performs:
@@ -78,7 +82,7 @@ ed.detect_electrodes('CT_016.nii', 'MR_016.nii')
   - Application of the MR brain mask to the CT
   - Electrode candidate detection and outlier elimination
   - Saves electrode coordinates to:  
-    `processed_scans/electrodes_CT_016.json`
+    `processed_scans/electrodes_sample_ct.json`
 
 ---
 
@@ -87,12 +91,16 @@ ed.detect_electrodes('CT_016.nii', 'MR_016.nii')
 ```python
 import ElecMap.electrode_visualization as ev
 
+# Input files
+ct_file = 'sample_ct.nii'
+generated_json_path = 'processed_scans/electrodes_sample_ct.json'
+
 # Visualize and generate PDF report
-ev.display_electrode_locations('CT_016.nii', 'processed_scans/electrodes_CT_016.json')
+ev.display_electrode_locations(ct_file, generated_json_path)
 ```
 
 - Outputs a PDF report in the current directory:  
-  `./report_CT_016.pdf`
+  `./report_sample_ct.pdf`
 
 - A part of an example PDF report is shown below:
   ![image](https://github.com/user-attachments/assets/954b730e-2908-459a-a50a-866afb929b4a)
@@ -122,7 +130,7 @@ ElecMap/
 
 ## 📋 JSON Output Format 
 
-The JSON file `electrodes_CT_XXX.json` contains a list of electrode coordinates:
+The JSON file `electrodes_sample_ct.json` contains a list of electrode coordinates:
 
 ```json
 [
@@ -152,8 +160,8 @@ X-axis bounds: 42 to 487
 250610-10:24:41,560 nipype.interface WARNING:
 	 FSLOUTPUTTYPE environment variable is not set. Setting FSLOUTPUTTYPE=NIFTI
 Skull stripping complete.
-Skull-stripped MR image saved at: /data/processed_scans/MR_016_bet.nii.gz
-Brain mask saved at: /data/processed_scans/MR_016_bet_mask.nii
+Skull-stripped MR image saved at: /path/to/your/processed_scans/sample_mr_bet.nii.gz
+Brain mask saved at: /path/to/your/processed_scans/sample_mr_bet_mask.nii
 
 [10:24:55] STEP 3: Loading the generated MR brain mask and applying it to the CT scan...
 MR brain mask loaded successfully.
@@ -181,15 +189,15 @@ Electrode coordinates successfully saved to: processed_scans/electrodes_CT_016.j
 - Sample console output from `ElecMap.electrode_visualizaion`:
 ```
 [10:25:17] Loading image and electrode data ...
-CT image loaded from CT_016.nii for visualization.
-Electrode data loaded from processed_scans/electrodes_CT_016.json.
+CT image loaded from sample_ct.nii for visualization.
+Electrode data loaded from processed_scans/electrodes_sample_ct.json.
 
 [10:25:18] Generating report from identified electrode locations in the CT scan ...
 A total of 135 electrodes were detected. This may take some time to plot all locations.
 
 [10:26:22] Finalizing electrode localization plots ...
 
-All electrode localization plots successfully saved to ./report_CT_016.pdf
+All electrode localization plots successfully saved to ./report_sample_ct.pdf
 ```
 
 PDF preview shows axial/sagittal/coronal views with electrode markers for each contact.
