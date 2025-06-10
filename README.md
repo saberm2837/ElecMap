@@ -69,8 +69,8 @@ This package leverages powerful libraries such as SimpleITK for image processing
 import ElecMap.electrode_detection as ed
 
 # Input files
-ct_file = 'sample_ct.nii'
-mr_file = 'sample_mr.nii'
+ct_file = '/path/to/your/sample_ct.nii'
+mr_file = '/path/to/your/sample_mr.nii'
 
 # Detect electrodes using CT and MR images
 ed.detect_electrodes(ct_file, mr_file)
@@ -92,7 +92,7 @@ ed.detect_electrodes(ct_file, mr_file)
 import ElecMap.electrode_visualization as ev
 
 # Input files
-ct_file = 'sample_ct.nii'
+ct_file = '/path/to/your/sample_ct.nii'
 generated_json_path = 'processed_scans/electrodes_sample_ct.json'
 
 # Visualize and generate PDF report
@@ -197,7 +197,7 @@ A total of 135 electrodes were detected. This may take some time to plot all loc
 
 [10:26:22] Finalizing electrode localization plots ...
 
-All electrode localization plots successfully saved to ./report_sample_ct.pdf
+All electrode localization plots successfully saved to reports_elecmap/report_sample_ct.pdf
 ```
 
 PDF preview shows axial/sagittal/coronal views with electrode markers for each contact.
