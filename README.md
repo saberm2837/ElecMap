@@ -107,18 +107,17 @@ ev.display_electrode_locations('CT_016.nii', 'processed_scans/electrodes_CT_016.
 
 ```
 ElecMap/
-├── electrode_detection.py
-├── electrode_visualization.py
-├── __init__.py
-processed_scans/
-├── MR_016_bet.nii.gz
-├── MR_016_bet_mask.nii
-├── electrodes_CT_016.json
-CT_016.nii
-MR_016.nii
-report_CT_016.pdf
+├── elecmap/
+│	├── electrode_detection.py
+|	├── electrode_visualization.py
+|	└── __init__.py
+├── examples/                 
+│   └── run_elecmap_demo.py
+├── .gitignore
+├── LICENCE
+├── README.md
+└── setup.py
 ```
-
 ---
 
 ## 📋 JSON Output Format 
