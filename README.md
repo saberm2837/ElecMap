@@ -184,7 +184,7 @@ Final electrode count after eliminating 7 potential outliers: 135
 
 [10:25:17] STEP 5: Saving electrode coordinates to the disk...
 
-Electrode coordinates successfully saved to: processed_scans/electrodes_CT_016.json
+Electrode coordinates successfully saved to: processed_scans/electrodes_sample_ct.json
 ```
 - Sample console output from `ElecMap.electrode_visualizaion`:
 ```
