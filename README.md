@@ -94,6 +94,13 @@ ev.display_electrode_locations('CT_016.nii', 'processed_scans/electrodes_CT_016.
 - Outputs a PDF report in the current directory:  
   `./report_CT_016.pdf`
 
+- A part of an example PDF report is shown below:
+  ![image](https://github.com/user-attachments/assets/954b730e-2908-459a-a50a-866afb929b4a)
+  ![image](https://github.com/user-attachments/assets/3378717c-9869-478a-8605-eb104c03f77d)
+  ![image](https://github.com/user-attachments/assets/0b0b9a19-ac1b-424c-92d9-dc84b9af14c2)
+  ![image](https://github.com/user-attachments/assets/497c39ef-a013-436c-9863-024e2e84ce6f)
+  ![image](https://github.com/user-attachments/assets/c462fc1e-0316-4352-aa23-1888e7fd864d)
+
 ---
 
 ## 📂 Directory Structure <a name="project-structure"></a>
@@ -132,14 +139,58 @@ The JSON file `electrodes_CT_XXX.json` contains a list of electrode coordinates:
 
 ## ✅ Example Output <a name="sample-output"></a>
 
-Sample console output:
+- Sample console output from `ElecMap.electrode_detection`:
 ```
-[13:08:25] STEP 2: Performing skull stripping on MR using FSL BET...
+[10:24:39] STEP 1: Loading images...
+Images loaded successfully.
+CT array shape: (481, 650, 529)
+voxel intensity range: -4734.0 to 31743.0
+Z-axis bounds: 38 to 443
+Y-axis bounds: 52 to 598
+X-axis bounds: 42 to 487
+
+[10:24:41] STEP 2: Performing skull stripping on MR using FSL BET...
+250610-10:24:41,560 nipype.interface WARNING:
+	 FSLOUTPUTTYPE environment variable is not set. Setting FSLOUTPUTTYPE=NIFTI
 Skull stripping complete.
-Brain mask saved at: MR_016_bet_mask.nii
-[13:09:00] STEP 4: Compute the centroid of electrodes...
+Skull-stripped MR image saved at: /data/processed_scans/MR_016_bet.nii.gz
+Brain mask saved at: /data/processed_scans/MR_016_bet_mask.nii
+
+[10:24:55] STEP 3: Loading the generated MR brain mask and applying it to the CT scan...
+MR brain mask loaded successfully.
+
+[10:24:55] Dilating the brain mask by 30 voxels...
+Successfully Skull stripped the CT scan.
+
+[10:25:16] STEP 4: Compute the centroid of electrodes...
 Detected total number of potential electrodes: 142
+
+[10:25:16] STEP 5: Eliminate outliers from the list of potential electrodes...
+Electrode outside margin 1: physical = (29.92, -35.9, -83.28), voxel = (339, 414, 31)
+Electrode outside margin 2: physical = (-27.22, -37.28, -88.78), voxel = (196, 417, 18)
+Electrode outside margin 3: physical = (-27.55, -38.4, -87.82), voxel = (195, 420, 20)
+Electrode outside margin 4: physical = (-27.75, -38.8, -87.42), voxel = (195, 421, 21)
+Electrode outside margin 5: physical = (-25.96, -38.0, -88.62), voxel = (199, 419, 18)
+Electrode outside margin 6: physical = (-26.36, -38.4, -88.22), voxel = (198, 420, 19)
+Electrode outside margin 7: physical = (26.76, -35.6, -83.43), voxel = (331, 413, 31)
 Final electrode count after eliminating 7 potential outliers: 135
+
+[10:25:17] STEP 5: Saving electrode coordinates to the disk...
+
+Electrode coordinates successfully saved to: processed_scans/electrodes_CT_016.json
+```
+- Sample console output from `ElecMap.electrode_visualizaion`:
+```
+[10:25:17] Loading image and electrode data ...
+CT image loaded from CT_016.nii for visualization.
+Electrode data loaded from processed_scans/electrodes_CT_016.json.
+
+[10:25:18] Generating report from identified electrode locations in the CT scan ...
+A total of 135 electrodes were detected. This may take some time to plot all locations.
+
+[10:26:22] Finalizing electrode localization plots ...
+
+All electrode localization plots successfully saved to ./report_CT_016.pdf
 ```
 
 PDF preview shows axial/sagittal/coronal views with electrode markers for each contact.
