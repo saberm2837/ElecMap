@@ -76,11 +76,11 @@ detect_electrodes(ct_file, mr_file)
 ```
 
 - This step performs:
-  - Image loading
-  - Skull-stripping of the MR scan
-  - Application of the MR brain mask to the CT
-  - Electrode candidate detection and outlier elimination
-  - Saves electrode coordinates to:  
+  1. Image loading
+  2. Skull-stripping of the MR scan
+  3. Application of the MR brain mask to the CT
+  4. Electrode candidate detection and outlier elimination
+  5. Saves electrode coordinates to:  
     `processed_scans/electrodes_sample_ct.json`
 
 ---
@@ -98,8 +98,8 @@ generated_json_path = 'processed_scans/electrodes_sample_ct.json'
 display_electrode_locations(ct_file, generated_json_path)
 ```
 
-- Outputs a PDF report:  
-  `reports/report_sample_ct.pdf`
+- Outputs a PDF report in the current directory:  
+  `./report_sample_ct.pdf`
 
 - A part of an example PDF report is shown below:
   ![image](https://github.com/user-attachments/assets/954b730e-2908-459a-a50a-866afb929b4a)
@@ -115,15 +115,19 @@ display_electrode_locations(ct_file, generated_json_path)
 ```
 ElecMap/
 ├── elecmap/
-│   ├── __init__.py
+│	├── __init__.py
 |   ├── electrode_detection.py
-|   ├── electrode_visualization.py
-|   └── utils.py
+|	├── electrode_visualization.py
+|	└── utils.py
+|
 ├── examples/                 
 │   └── run_elecmap_demo.py
-├── setup.py
+|
+├── LICENCE
 ├── README.md
-└── LICENCE└── requirements.txt
+├── requirements.txt
+├── setup.py
+└── pyproject.toml 
 ```
 ---
 
