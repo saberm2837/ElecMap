@@ -2,6 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![PyPI version](https://badge.fury.io/py/elecmap.svg)](https://pypi.org/project/elecmap/)
 
 Automated detection and visualization of intracranial electrodes from CT/MR scans for neurosurgical planning and research.
 
