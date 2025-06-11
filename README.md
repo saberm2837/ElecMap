@@ -98,8 +98,8 @@ generated_json_path = 'processed_scans/electrodes_sample_ct.json'
 display_electrode_locations(ct_file, generated_json_path)
 ```
 
-- Outputs a PDF report in the current directory:  
-  `./report_sample_ct.pdf`
+- Outputs a PDF report:  
+  `reports/report_sample_ct.pdf`
 
 - A part of an example PDF report is shown below:
   ![image](https://github.com/user-attachments/assets/954b730e-2908-459a-a50a-866afb929b4a)
