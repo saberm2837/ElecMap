@@ -35,7 +35,7 @@ def display_electrode_locations(
     electrode_json_path, 
     min_intensity=None,
     max_intensity=None,
-    output_dir=None,
+    output_dir='reports',
 ):
     """
     Displays axial, sagittal, and coronal slices from a 3D CT volume
@@ -50,10 +50,12 @@ def display_electrode_locations(
                                        If None, uses the minimum of the CT array.
         max_intensity (int, optional): Maximum intensity for displaying images.
                                        If None, uses the maximum of the CT array.
-        output_dir (str, optional): If provided, all automatically identified electrode locations  
-                                    will be saved into a single PDF file at this path.
+        output_dir (str, optional): Directory to save the report. Defaults to 'reports'. All automatically 
+                                    identified electrode locations will be saved in a single PDF file at this path.
     """
+    os.makedirs(output_dir, exist_ok=True)
     original_stdout = sys.stdout
+    
     # --- Input Validation ---
     if not os.path.exists(ct_image_path):
         print(f"Error: CT image file not found at {ct_image_path}")
@@ -112,11 +114,11 @@ def display_electrode_locations(
     _print_timestamp("Generating report from identified electrode locations in the CT scan ...")
     print(f"A total of {len(voxel_centroids)} electrodes were detected. This may take some time to plot all locations.")
     ct_filename = os.path.splitext(os.path.basename(ct_image_path))[0]
-    pdf_path = os.path.join(output_dir if output_dir else "/report_elecmap", f"report_{ct_filename}.pdf")
+    pdf_path = os.path.join(output_dir if output_dir else "reports", f"report_{ct_filename}.pdf")
 
     try:
         pdf = PdfPages(pdf_path)
-        fig_heading = plt.figure(figsize=(15, 6)) # A standard letter size page
+        fig_heading = plt.figure(figsize=(15, 6)) 
         fig_heading.text(0.5, 0.8, "Electrode Localization Report",
                              fontsize=24, ha='center', va='center', wrap=True)
         fig_heading.text(0.5, 0.6, f"CT filename: {ct_image_path}", fontsize=18, ha='center', va='center')
