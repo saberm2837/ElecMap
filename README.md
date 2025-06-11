@@ -76,11 +76,11 @@ detect_electrodes(ct_file, mr_file)
 ```
 
 - This step performs:
-  1. Image loading
-  2. Skull-stripping of the MR scan
-  3. Application of the MR brain mask to the CT
-  4. Electrode candidate detection and outlier elimination
-  5. Saves electrode coordinates to:  
+  - Image loading
+  - Skull-stripping of the MR scan
+  - Application of the MR brain mask to the CT
+  - Electrode candidate detection and outlier elimination
+  - Saves electrode coordinates to:  
     `processed_scans/electrodes_sample_ct.json`
 
 ---
