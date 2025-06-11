@@ -1,12 +1,13 @@
 from nipype.interfaces.fsl import BET
-from .utils import _print_timestamp
 from termcolor import colored
+from .utils import log_msg
 import SimpleITK as sitk
 import numpy as np
+import datetime
 import json
 import os
 
-def _vox_dist(point1, point2):
+def _vox_dist(point1: list|np.ndarray, point2: list|np.ndarray) -> float:
     """
     Calculates the Euclidean distance between two 3D points using NumPy.
 
@@ -48,21 +49,21 @@ def _find_nearest_elec_dist(vox, elec_list):
         return min_dist, min_dist_vox
 
 def detect_electrodes(
-    ct_file,
-    mr_file,
-    output_dir='processed_scans',
-    ss_frac=0.25,
-    dilate_n_voxels=30,
-    margin=0.08,
-    cut_off_intensity=9500,
-    fsl_dir='/opt/fsl'
-):
+    ct_file_path: str,
+    mr_file_path: str,
+    output_dir: str = 'processed_scans',
+    ss_frac: float = 0.25,
+    dilate_n_voxels: int = 30,
+    margin: float = 0.08,
+    cut_off_intensity: int = 9500,
+    fsl_dir: str = '/opt/fsl'
+) -> None:
     """
     Processes CT and MR scans to detect and localize electrodes.
 
     Parameters:
-        ct_file (str): Path to the input CT NIfTI file.
-        mr_file (str): Path to the input MR NIfTI file.
+        ct_file_path (str): Path to the input CT NIfTI file.
+        mr_file_path (str): Path to the input MR NIfTI file.
         output_dir (str, optional): Directory to save processed files. Defaults to 'processed_scans'.
         ss_frac (float, optional): Fractional intensity threshold for FSL BET (0-1). Lower values create bigger masks. Defaults to 0.25.
         dilate_n_voxels (int, optional): Number of voxels to dilate the binary mask. Defaults to 30.
@@ -75,13 +76,14 @@ def detect_electrodes(
     """
 
     os.makedirs(output_dir, exist_ok=True)
-    os.environ['FSLDIR'] = fsl_dir
+    if 'FSLDIR' not in os.environ:
+        os.environ['FSLDIR'] = fsl_dir
 
     # Step 1: Load the Image
-    _print_timestamp("STEP 1: Loading images...")
+    log_msg("STEP 1: Loading images...")
     try:
-        ct_image = sitk.ReadImage(ct_file)
-        mr_image = sitk.ReadImage(mr_file)
+        ct_image = sitk.ReadImage(ct_file_path)
+        mr_image = sitk.ReadImage(mr_file_path)
         print("Images loaded successfully.")
     except Exception as e:
         print(f"Error loading images: {e}")
@@ -112,13 +114,13 @@ def detect_electrodes(
     print(f"X-axis bounds: {x_min} to {x_max}")
 
     # Step 2: Perform Skull Stripping on MR using FSL BET
-    _print_timestamp("STEP 2: Performing skull stripping on MR using FSL BET...")
+    log_msg("STEP 2: Performing skull stripping on MR using FSL BET...")
     skullstrip = BET()
-    skullstrip.inputs.in_file = mr_file
+    skullstrip.inputs.in_file = mr_file_path
     skullstrip.inputs.frac = ss_frac
     skullstrip.inputs.mask = True
 
-    mr_filename = os.path.splitext(mr_file)[0]
+    mr_filename = os.path.splitext(os.path.basename(mr_file_path))[0]
     bet_stripped_mr_file = os.path.join(output_dir, f'{mr_filename}_bet.nii.gz')
     skullstrip.inputs.out_file = bet_stripped_mr_file
 
@@ -133,7 +135,7 @@ def detect_electrodes(
         return None
 
     # Step 3: Load the generated MR Brain Mask
-    _print_timestamp("STEP 3: Loading the generated MR brain mask and applying it to the CT scan...")
+    log_msg("STEP 3: Loading the generated MR brain mask and applying it to the CT scan...")
     try:
         mr_brain_mask = sitk.ReadImage(bet_mask_file)
         print("MR brain mask loaded successfully.")
@@ -141,7 +143,7 @@ def detect_electrodes(
         print(f"Error loading MR brain mask: {e}")
         return None
 
-    _print_timestamp(f"Dilating the brain mask by {dilate_n_voxels} voxels...")
+    log_msg(f"Dilating the brain mask by {dilate_n_voxels} voxels...")
     dilated_mask = sitk.BinaryDilate(mr_brain_mask, (dilate_n_voxels, dilate_n_voxels, dilate_n_voxels))
 
     dilated_brain_mask = sitk.Cast(dilated_mask, ct_image.GetPixelID())
@@ -150,7 +152,7 @@ def detect_electrodes(
     print("Successfully Skull stripped the CT scan.")
 
     # Step 4: Compute the centroid of electrodes through image segmentation
-    _print_timestamp("STEP 4: Compute the centroid of electrodes...")
+    log_msg("STEP 4: Compute the centroid of electrodes...")
     upper = float(sitk.GetArrayViewFromImage(ct_image).max())
     lower = cut_off_intensity
     electrode_seg = sitk.BinaryThreshold(masked_ct_image, lowerThreshold=lower, upperThreshold=upper, insideValue=1, outsideValue=0)
@@ -167,7 +169,7 @@ def detect_electrodes(
     print(f"Detected total number of potential electrodes: {len(stats.GetLabels())}")
     
     # Step 5: Eliminate outliers from the list of potential electrodes
-    _print_timestamp("STEP 5: Eliminate outliers from the list of potential electrodes...")
+    log_msg("STEP 5: Eliminate outliers from the list of potential electrodes...")
     dup_count = 0
     out_mask_bound = 0
     for label in stats.GetLabels():
@@ -192,7 +194,7 @@ def detect_electrodes(
     electrode_data_for_json = []
 
     # Step 6: Saving electrode coordinates to the disk
-    _print_timestamp("STEP 5: Saving electrode coordinates to the disk...")
+    log_msg("STEP 6: Saving electrode coordinates to the disk...")
     for i, electrode in enumerate(range(len(voxel_centroids))):
         phy_coords = phys_centroids[electrode]
         vox_coords = voxel_centroids[electrode]
@@ -202,14 +204,14 @@ def detect_electrodes(
             "voxel_coords": list(vox_coords)
         })
         
-    ct_filename = os.path.splitext(ct_file)[0]
+    ct_filename = os.path.splitext(os.path.basename(ct_file_path))[0]
     json_output_file = os.path.join(output_dir, f'electrodes_{ct_filename}.json')
 
     try:
         with open(json_output_file, 'w') as f:
             json.dump(electrode_data_for_json, f, indent=4)
-        print(f"\nElectrode coordinates successfully saved to: {json_output_file}")
+        print(f"Electrode coordinates successfully saved to: {json_output_file}")
         return json_output_file
     except Exception as e:
-        print(f"\nError saving electrode coordinates to JSON: {e}")
+        print(f"Error saving electrode coordinates to JSON: {e}")
         return None

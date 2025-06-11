@@ -1,12 +1,11 @@
 from matplotlib.backends.backend_pdf import PdfPages
-from .utils import _print_timestamp
 import matplotlib.pyplot as plt
+from .utils import log_msg
 import SimpleITK as sitk
 import numpy as np
 import datetime
-import os
 import json
-import sys
+import os
 import io
 
 def _get_display_array(sitk_image):
@@ -22,8 +21,7 @@ def _get_display_array(sitk_image):
     """
     img_array = sitk.GetArrayFromImage(sitk_image)
 
-    # This assumes img_array's axes are Z (S-I), Y (A-P), X (R-L)
-    # and want to display it as Z (I-S), Y (P-A), X (L-R)
+    # Flip to display as radiological convention: Z (I-S), Y (P-A), X (L-R)
     display_array = np.flip(img_array, axis=0)  # Flip Z (for I-S)
     display_array = np.flip(display_array, axis=1)  # Flip Y (for P-A)
     display_array = np.flip(display_array, axis=2)  # Flip X (for L-R)
@@ -31,19 +29,19 @@ def _get_display_array(sitk_image):
     return display_array
 
 def display_electrode_locations(
-    ct_image_path,
-    electrode_json_path, 
-    min_intensity=None,
-    max_intensity=None,
-    output_dir='reports',
-):
+    ct_file_path: str,
+    electrode_json_path: str, 
+    min_intensity: int = None,
+    max_intensity: int = None,
+    output_dir: str = 'reports',
+) -> None:
     """
     Displays axial, sagittal, and coronal slices from a 3D CT volume
     with detected electrode locations marked. Each electrode is displayed
     in a separate set of plots.
 
     Parameters:
-        ct_image_path (str): The path to the CT NIfTI file.
+        ct_file_path (str): The path to the CT NIfTI file.
         electrode_json_path (str): The path to the JSON file containing electrode coordinates.
                                    Expected format: [{"physical_mm": [...], "voxel_coords": [...]}, ...]
         min_intensity (int, optional): Minimum intensity for displaying images.
@@ -54,22 +52,21 @@ def display_electrode_locations(
                                     identified electrode locations will be saved in a single PDF file at this path.
     """
     os.makedirs(output_dir, exist_ok=True)
-    original_stdout = sys.stdout
     
     # --- Input Validation ---
-    if not os.path.exists(ct_image_path):
-        print(f"Error: CT image file not found at {ct_image_path}")
+    if not os.path.exists(ct_file_path):
+        print(f"Error: CT image file not found at {ct_file_path}")
         return
     
     if not os.path.exists(electrode_json_path):
         print(f"Error: Electrode JSON file not found at {electrode_json_path}")
         return
 
-    _print_timestamp("Loading image and electrode data ...")
+    log_msg("STEP 1: Loading image and electrode data ...")
     # --- Load CT Image ---
     try:
-        ct_image = sitk.ReadImage(ct_image_path)
-        print(f"CT image loaded from {ct_image_path} for visualization.")
+        ct_image = sitk.ReadImage(ct_file_path)
+        print(f"CT image loaded from {ct_file_path} for visualization.")
     except Exception as e:
         print(f"Error loading CT image for visualization: {e}")
         return
@@ -111,9 +108,9 @@ def display_electrode_locations(
     # Get original image dimensions for index transformation
     ct_image_size = ct_image.GetSize() # (X, Y, Z)
 
-    _print_timestamp("Generating report from identified electrode locations in the CT scan ...")
+    log_msg("STEP 2: Generating report from identified electrode locations in the CT scan ...")
     print(f"A total of {len(voxel_centroids)} electrodes were detected. This may take some time to plot all locations.")
-    ct_filename = os.path.splitext(os.path.basename(ct_image_path))[0]
+    ct_filename = os.path.splitext(os.path.basename(ct_file_path))[0]
     pdf_path = os.path.join(output_dir if output_dir else "reports", f"report_{ct_filename}.pdf")
 
     try:
@@ -121,7 +118,7 @@ def display_electrode_locations(
         fig_heading = plt.figure(figsize=(15, 6)) 
         fig_heading.text(0.5, 0.8, "Electrode Localization Report",
                              fontsize=24, ha='center', va='center', wrap=True)
-        fig_heading.text(0.5, 0.6, f"CT filename: {ct_image_path}", fontsize=18, ha='center', va='center')
+        fig_heading.text(0.5, 0.6, f"CT filename: {ct_file_path}", fontsize=18, ha='center', va='center')
         fig_heading.text(0.5, 0.5, f"Date: {datetime.datetime.now().strftime('%Y-%m-%d')}", fontsize=18, ha='center', va='center') 
 
         pdf.savefig(fig_heading)
@@ -180,10 +177,8 @@ def display_electrode_locations(
                 
         plt.close(fig) # Close the figure to free up memory immediately   
 
-    _print_timestamp("Finalizing electrode localization plots ...")
+    log_msg("STEP 3: Finalizing electrode localization plots ...")
     if pdf:
         pdf.close()
-        print(f"\nAll electrode localization plots successfully saved to {pdf_path}", file=original_stdout)
-    else:
-        sys.stdout = original_stdout
+        print(f"All electrode localization plots successfully saved to {pdf_path}")
 
