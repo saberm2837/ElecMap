@@ -40,7 +40,12 @@ This package leverages powerful libraries such as SimpleITK for image processing
 ---
 
 ## 📦 Installation <a name="installation"></a>
-
+### Option 1: Install from PyPI (Recommended)
+   ```bash
+   pip install elecmap
+   ```
+### Option 2: Install from Source (Developer Mode)
+Clone the repository and install dependencies manually:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/saberm2837/ElecMap.git
@@ -52,7 +57,7 @@ This package leverages powerful libraries such as SimpleITK for image processing
    pip install -r requirements.txt
    ```
 
-3. **FSL Dependency**:
+### ⚙️ FSL Dependency:
    Make sure [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation) is installed and accessible in your environment.
    ```bash
    export FSLDIR=/opt/fsl
