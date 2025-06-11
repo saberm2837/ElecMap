@@ -1,0 +1,5 @@
+numpy>=1.19.0
+SimpleITK>=2.0.0
+matplotlib>=3.3.0
+nipype>=1.6.0
+termcolor>=1.1.0
