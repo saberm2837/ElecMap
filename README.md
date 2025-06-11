@@ -116,15 +116,16 @@ ev.display_electrode_locations(ct_file, generated_json_path)
 ```
 ElecMap/
 ├── elecmap/
-│	├── electrode_detection.py
-|	├── electrode_visualization.py
-|	└── __init__.py
+│   ├── __init__.py
+|   ├── electrode_detection.py
+|   ├── electrode_visualization.py
+|   └── utils.py
 ├── examples/                 
 │   └── run_elecmap_demo.py
-├── .gitignore
-├── LICENCE
+├── setup.py
 ├── README.md
-└── setup.py
+├── LICENCE
+└── requirements.txt
 ```
 ---
 
