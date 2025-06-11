@@ -229,13 +229,7 @@ MIT License. See [LICENSE](LICENSE) for details.
 
 ## 🤝 Contributing 
 
-Contributions are welcome! Feel free to fork this repository and submit pull requests.
-
-1. Fork the repo
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Create a pull request
+Feedback and bug reports are welcome! Please open an issue on [GitHub](https://github.com/saberm2837/ElecMap/issues) to discuss suggestions.
 
 ---
 
