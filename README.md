@@ -1,11 +1,11 @@
-# ElecMap: Automated Electrode Detection and Visualization
+# 🧠 ElecMap: Intracranial Electrode Localization Toolkit
 
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
----
+Automated detection and visualization of intracranial electrodes from CT/MR scans for neurosurgical planning and research.
 
-# ElecMap
+---
 
 ## 📁 Table of Contents
 
@@ -29,13 +29,12 @@ This package leverages powerful libraries such as SimpleITK for image processing
 
 ---
 
-## 🧠 Features <a name="features"></a>
+## 🌟 Key Features <a name="features"></a>
 
-- **Automated Electrode Detection**: Identifies electrode locations in CT scans by integrating with MR skull stripping (via FSL BET) to focus the detection within the brain's vicinity.
-- **Robust Outlier Elimination**: Includes logic to filter out duplicate detections and artifacts outside the expected brain region.
-- **Detailed Localization Output**: Saves detected electrode physical location and voxel coordinates to a JSON file for easy programmatic access.
-- **Electrode Visualization**: Provides a tool to generate multi-page PDF reports. These reports help users visually confirm each detected electrode's location across axial, sagittal, and coronal slices of the CT scan.
-- **Configurable Parameters**: Allows customization of critical parameters like skull-stripping fraction, dilation voxels, and intensity thresholds for flexible application.
+- **Precise Electrode Mapping**: Accurately localizes electrode centroids in 3D space
+- **Multi-Modal Integration**: Combines CT and MR data for improved detection
+- **Clinical-Grade Output**: Generates standardized PDF reports for documentation
+- **Smart Filtering**: Automatic outlier rejection and duplicate detection
 
 ---
 
@@ -43,7 +42,7 @@ This package leverages powerful libraries such as SimpleITK for image processing
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/ElecMap.git
+   git clone https://github.com/saberm2837/ElecMap.git
    cd ElecMap
    ```
 
@@ -66,14 +65,14 @@ This package leverages powerful libraries such as SimpleITK for image processing
 ### 1. Electrode Detection <a name="electrode-detection"></a>
 
 ```python
-import ElecMap.electrode_detection as ed
+from ElecMap import detect_electrodes
 
 # Input files
 ct_file = '/path/to/your/sample_ct.nii'
 mr_file = '/path/to/your/sample_mr.nii'
 
 # Detect electrodes using CT and MR images
-ed.detect_electrodes(ct_file, mr_file)
+detect_electrodes(ct_file, mr_file)
 ```
 
 - This step performs:
@@ -89,14 +88,14 @@ ed.detect_electrodes(ct_file, mr_file)
 ### 2. Electrode Visualization <a name="electrode-visualization"></a>
 
 ```python
-import ElecMap.electrode_visualization as ev
+from ElecMap import display_electrode_locations
 
 # Input files
 ct_file = '/path/to/your/sample_ct.nii'
 generated_json_path = 'processed_scans/electrodes_sample_ct.json'
 
 # Visualize and generate PDF report
-ev.display_electrode_locations(ct_file, generated_json_path)
+display_electrode_locations(ct_file, generated_json_path)
 ```
 
 - Outputs a PDF report in the current directory:  
@@ -116,16 +115,15 @@ ev.display_electrode_locations(ct_file, generated_json_path)
 ```
 ElecMap/
 ├── elecmap/
-│   ├── __init__.py
+│	├── __init__.py
 |   ├── electrode_detection.py
-|   ├── electrode_visualization.py
-|   └── utils.py
+|	├── electrode_visualization.py
+|	└── utils.py
 ├── examples/                 
 │   └── run_elecmap_demo.py
 ├── setup.py
 ├── README.md
-├── LICENCE
-└── requirements.txt
+└── LICENCE└── requirements.txt
 ```
 ---
 
