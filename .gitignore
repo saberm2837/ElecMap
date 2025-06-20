@@ -1,0 +1,6 @@
+# Gitignore for the ElecMap project
+/data/
+/dist/
+/elecmap.egg-info/
+/processed_scans/
+/reports/
