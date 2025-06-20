@@ -1,0 +1,6 @@
+SimpleITK>=2.1
+nipype>=1.8
+numpy>=1.20
+matplotlib>=3.5
+termcolor>=2.0
+tqdm>=4.60
