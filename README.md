@@ -170,11 +170,11 @@ HTML report saved to: reports/report_sample_ct.html
 ```
 
 Report preview (example images):
-![image](https://github.com/user-attachments/assets/954b730e-2908-459a-a50a-866afb929b4a)
-![image](https://github.com/user-attachments/assets/3378717c-9869-478a-8605-eb104c03f77d)
-![image](https://github.com/user-attachments/assets/0b0b9a19-ac1b-424c-92d9-dc84b9af14c2)
-![image](https://github.com/user-attachments/assets/497c39ef-a013-436c-9863-024e2e84ce6f)
-![image](https://github.com/user-attachments/assets/c462fc1e-0316-4352-aa23-1888e7fd864d)
+![ct_image_01](https://github.com/user-attachments/assets/d8b26495-12ec-4159-bd66-fc85a023c83e)
+![ct_image_02](https://github.com/user-attachments/assets/7913ea6c-2364-4135-8563-c66a4f13fb46)
+![ct_image_03](https://github.com/user-attachments/assets/28d2acda-cef7-41d7-a2a1-9ebda5d4ce61)
+![ct_image_04](https://github.com/user-attachments/assets/c124a21e-5c81-40c6-889c-4fe409a85a2e)
+![ct_image_05](https://github.com/user-attachments/assets/09661852-1570-4797-a458-c3819858f547)
 
 ---
 
