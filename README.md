@@ -11,7 +11,7 @@ Automated detection and visualization of intracranial electrodes from CT/MR scan
 ## 📁 Table of Contents
 
 - [Introduction](#introduction)
-- [Features](#features)
+- [Key Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Electrode Detection](#electrode-detection)
@@ -27,7 +27,7 @@ Automated detection and visualization of intracranial electrodes from CT/MR scan
 
 ---
 
-## 📘 Introduction
+## 📘 Introduction <a name="introduction"></a>
 
 **ElecMap** is a Python package designed for the automated detection of intracranial electrodes from CT and MR brain scans. It accurately identifies and localizes electrode centroids within medical imaging data. The package includes a visualization tool to help users review and display the detected electrode locations.
 
@@ -38,7 +38,7 @@ It leverages powerful libraries such as:
 
 ---
 
-## 🌟 Key Features
+## 🌟 Key Features <a name="features"></a>
 
 - ✅ **Precise Electrode Mapping**: Localizes electrode centroids in 3D space
 - 🔄 **Multi-Modal Integration**: Combines CT and MR data for improved anatomical accuracy
@@ -48,7 +48,7 @@ It leverages powerful libraries such as:
 
 ---
 
-## 📦 Installation
+## 📦 Installation <a name="installation"></a>
 
 ### 1. Install directly from PyPI (recommended):
 
@@ -67,9 +67,9 @@ cd ElecMap
 
 ---
 
-## 🛠️ Usage
+## 🛠️ Usage <a name="usage"></a>
 
-### 1. Electrode Detection
+### 1. Electrode Detection <a name="electrode-detection"></a>
 
 ```python
 from elecmap import detect_electrodes
@@ -101,7 +101,7 @@ This function performs:
 
 ---
 
-### 2. Electrode Visualization
+### 2. Electrode Visualization <a name="electrode-visualization"></a>
 
 ```python
 from elecmap import display_electrode_locations
@@ -121,7 +121,7 @@ This function:
 
 ---
 
-## ✅ Sample Output
+## ✅ Sample Output <a name="sample-output"></a>
 
 Console output (detection):
 
@@ -178,7 +178,7 @@ Report preview (example images):
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure <a name="project-structure"></a>
 
 ```
 ElecMap/
@@ -201,7 +201,7 @@ ElecMap/
 
 ---
 
-## 📋 JSON Output Format
+## 📋 JSON Output Format <a name="json-output-format"></a>
 
 The output JSON contains a list of detected electrode centroids:
 
@@ -220,7 +220,7 @@ The output JSON contains a list of detected electrode centroids:
 
 ---
 
-## 🔬 Use Cases
+## 🔬 Use Cases <a name="use-cases"></a>
 
 - Epilepsy and tumor surgery planning
 - Post-operative SEEG or ECoG contact localization
@@ -230,7 +230,7 @@ The output JSON contains a list of detected electrode centroids:
 
 ---
 
-## 🧪 Dependencies
+## 🧪 Dependencies <a name="dependencies"></a>
 
 - Python 3.8+
 - Python libraries:
@@ -254,20 +254,20 @@ pip install -r requirements.txt
 
 ---
 
-## 🧾 License
+## 🧾 License <a name="license"></a>
 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contributing <a name="contributing"></a>
 
 Feedback and contributions are welcome!  
 Please [open an issue](https://github.com/saberm2837/ElecMap/issues) to report bugs, request features, or contribute code.
 
 ---
 
-## 📫 Contact
+## 📫 Contact <a name="contact"></a>
 
 **Created by:** Mohammad Saber  
 📧 Email: [mohammadsaber@gmail.com](mailto:mohammadsaber@gmail.com)  
@@ -275,7 +275,7 @@ Please [open an issue](https://github.com/saberm2837/ElecMap/issues) to report b
 
 ---
 
-## 📚 Citation
+## 📚 Citation <a name="citation"></a>
 
 If you use **ElecMap** in your research, please cite:
 
